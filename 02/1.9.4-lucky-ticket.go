@@ -5,12 +5,12 @@ import (
     "strconv"
 )
 
-func main(){
+func main() {
     var n int
     fmt.Scan(&n)
     first := n / 1000
     last := n % 1000
-    if sumOfDigits(first) == sumOfDigits(   last) {
+    if sumOfDigits(first) == sumOfDigits(last) {
         fmt.Println("YES")
     } else {
         fmt.Println("NO")
