@@ -103,3 +103,53 @@ func TestTraversing(t *testing.T) {
         ShouldEqual(t, values[i], expectedValues[i])
     }
 }
+
+func TestRepeatedValueInsert(t *testing.T) {
+    tree := new(AvlTree)
+    tree.Insert(4)
+    tree.Insert(4)
+    
+    var nilNode *Node
+    ShouldEqual(t, tree.Root.Value, 4)
+    ShouldEqual(t, tree.Root.ValueCount, 2)
+    ShouldEqual(t, tree.Root.Left, nilNode)
+    ShouldEqual(t, tree.Root.Right, nilNode)
+}
+
+func TestRepeatedValueDelete(t *testing.T) {
+    tree := new(AvlTree)
+    tree.Insert(4)
+    tree.Insert(4)
+    tree.Delete(4)
+    
+    var nilNode *Node
+    ShouldEqual(t, tree.Root.Value, 4)
+    ShouldEqual(t, tree.Root.ValueCount, 1)
+    ShouldEqual(t, tree.Root.Left, nilNode)
+    ShouldEqual(t, tree.Root.Right, nilNode)
+}
+
+func TestRepeatedValueTotalDelete(t *testing.T) {
+    tree := new(AvlTree)
+    tree.Insert(4)
+    tree.Insert(4)
+    tree.Delete(4)
+    tree.Delete(4)
+    
+    var nilNode *Node
+    ShouldEqual(t, tree.Root, nilNode)
+}
+
+func TestRepeatedValuePrinting(t *testing.T) {
+    valuesToInsert := [...]int{4, 4, 5, 6, 0}
+    tree := new(AvlTree)
+    for _, v := range valuesToInsert {
+        tree.Insert(v)
+    }
+    
+    expectedValues := [...]int{0, 4, 4, 5, 6}
+    values := tree.Traverse()
+    for i := 0; i < len(expectedValues); i++ {
+        ShouldEqual(t, values[i], expectedValues[i])
+    }
+}
