@@ -1,5 +1,10 @@
 package sortedSlice
 
+import (
+    "fmt"
+    "strconv"
+)
+
 type SortedSlice struct {
     slice []int
 }
