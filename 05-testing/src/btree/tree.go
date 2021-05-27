@@ -18,6 +18,7 @@ type Node struct {
     Right *Node
     Parent *Node
     Value int
+    ValueCount int
 }
 
 func (node *Node) Height() int {
@@ -112,7 +113,7 @@ func (node *Node) rebalance() *Node {
 
 func (node *Node) Insert(value int) *Node {
     if node == nil {
-        newNode := Node{Value: value}
+        newNode := Node{Value: value, ValueCount: 1}
         return &newNode
     }
     
@@ -126,6 +127,7 @@ func (node *Node) Insert(value int) *Node {
             node.Right = rightSubRoot
             rightSubRoot.Parent = node
         default:
+            node.ValueCount++
             return node
     }
     
@@ -157,6 +159,11 @@ func (node *Node) Delete(value int) *Node {
         case value > node.Value:
             node.Right = node.Right.Delete(value)
         default:
+            node.ValueCount--
+            if node.ValueCount > 0 {
+                return node
+            }
+        
             if node.Left != nil && node.Right != nil {
                 temp := node.Right.minValueNode()
                 node.Value = temp.Value
@@ -199,9 +206,11 @@ func (tree *AvlTree) Traverse() []int {
 
     visitedNodes := make([]*Node, 0)
     orderedNodes := tree.Root.traverse(visitedNodes)
-    nodeValues := make([]int, len(orderedNodes))
-    for i, node := range orderedNodes {
-        nodeValues[i] = node.Value
+    var nodeValues []int
+    for _, node := range orderedNodes {
+        for i := 0; i < node.ValueCount; i++ {
+            nodeValues = append(nodeValues, node.Value)
+        }
     }
     return nodeValues
 }
