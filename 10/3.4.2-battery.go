@@ -1,19 +1,22 @@
 package main
 
 import (
-	"fmt"
+    "fmt"
     "strings"
 )
 
 type Battery uint
 
 func (b *Battery) String() string {
+    if b == nil {
+        return ""
+    }
     result := "[" + strings.Repeat(" ", 10 - int(*b)) + strings.Repeat("X", int(*b)) + "]"
     return result
 }
 
 func main() {
-	var input string
+    var input string
     fmt.Scan(&input)
     var charge uint
     for _, r := range input {

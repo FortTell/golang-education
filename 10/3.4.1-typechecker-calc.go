@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+    "fmt"
     "errors"
 )
 
@@ -12,13 +12,12 @@ func readTask() (value1, value2, operation interface{}) {
 func tryCastFloat64(value interface{}) (float64, error) {
     if valueCasted, ok := value.(float64); ok {
         return valueCasted, nil
-    } else {
-        return 0.0, errors.New(fmt.Sprintf("value=%v: %T", value, value))
     }
+    return 0.0, errors.New(fmt.Sprintf("value=%v: %T", value, value))
 }
 
 func main() {
-	value1Raw, value2Raw, operationRaw := readTask()
+    value1Raw, value2Raw, operationRaw := readTask()
     value1, err := tryCastFloat64(value1Raw)
     if err != nil {
         fmt.Println(err)
