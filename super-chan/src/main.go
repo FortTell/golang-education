@@ -3,12 +3,13 @@ package main
 import (
     "superChan/src/pipe"
     "fmt"
+    "context"
 )
 
 func main() {
     cin := make(chan string)
     cout := make(chan string)
-    pp := pipe.New(cin, cout, func(s string) string { return s + s })
+    pp := pipe.New(context.TODO(), cin, cout, func(s string) string { return s + s })
     go func() {
         pp.Run()
     }()
